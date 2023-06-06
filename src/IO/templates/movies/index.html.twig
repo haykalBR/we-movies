@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+{% block title %} We Movies
+{% endblock %}
+{% block body %}
+    <div class="container">
+        {% include "components/search.html.twig" %}
+        <div class="row mt-5" >
+            <div class="col-3">
+                <ul class="navbar-nav">
+                    {% for genre in genres %}
+                        <li class="nav-item" >
+                            <input class="form-check-input actionCheckbox" name="actionCheckbox"  id="{{ genre.id }}" type="radio" value="{{ genre.id }}"> {{ genre.name }}
+                        </li>
+                    {% endfor %}
+
+                </ul>
+            </div>
+            <div class="col-9" id="container">
+            </div>
+        </div>
+    </div>
+    </div>
+    {% include "components/modal.html.twig" %}
+
+{% endblock %}

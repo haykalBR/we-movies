@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+{% block title %}Login!
+{% endblock %}
+{% block body %}
+    <div class="container-sm">
+        <div class="login-box mt-lg-5">
+            <div class="card">
+                <div class="card-body login-card-body">
+                    <p class="login-box-msg">Sign in </p>
+                    {% if error %}
+                        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                    {% endif %}
+                    <form action="{{ path('security_login') }}" method="post">
+                        <div class="input-group mb-3">
+                            <input type="email"
+                                   class="form-control"
+                                   value="{{ last_username }}"
+                                   name="email"
+                                   id="inputEmail"
+                                   placeholder="Email"
+                                   required
+                                   autofocus>
+
+                        </div>
+                        <div class="input-group mb-3">
+                            <input type="password"
+                                   name="password"
+                                   id="inputPassword"
+                                   class="form-control"
+                                   placeholder="Password"
+                                   required>
+
+                            <input type="hidden"
+                                   name="_csrf_token"
+                                   value="{{ csrf_token('authenticate') }}">
+                        </div>
+
+                        <div class="row">
+                            <div class="col-8">
+                                <div class="icheck-primary">
+                                    <input type="checkbox"
+                                           name="_remember_me"
+                                           id="remember">
+                                    <label for="remember">
+                                        Remember Me
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="social-auth-links text-center mb-3">
+                            <button  type="submit" class="btn btn-block btn-primary">
+                                Sign in
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

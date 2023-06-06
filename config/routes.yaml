@@ -1,0 +1,3 @@
+web_controllers:
+    resource: '../src/IO/Controller/'
+    type: annotation

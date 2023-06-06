@@ -1,0 +1,55 @@
+version: "3.8"
+services:
+    dataMovie:
+        environment:
+            MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+            MYSQL_DATABASE: ${MYSQL_DATABASE}
+            MYSQL_USER: ${MYSQL_USER}
+            MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+        image: mariadb:10.10.2
+
+        ports:
+        - "127.0.0.1:3306:3306"
+        networks:
+            - app        
+    php:
+        build:
+          context: ./tools/docker/php
+          args:
+              TIMEZONE: ${TIMEZONE}
+        platform: linux/x86_64
+        depends_on:
+        - dataMovie
+        environment:
+        - APP_ENV=${APP_ENV}
+        - APP_SECRET=${APP_SECRET}
+        - DATABASE_URL=${DATABASE_URL}
+        volumes:
+        - ./:/var/www
+        - ./tools/docker/php/php.ini:/usr/local/etc/php/php.ini:ro
+        networks:
+        - app
+    nginx:
+        build:
+            context: ./tools/docker/nginx
+        volumes:
+            - ./:/var/www
+        ports:
+            - 80:80
+        networks:
+            - app
+    redis:
+        image: redis:6.2.6
+        ports:
+        - "6379:6379"
+        volumes:
+        - ./docker/data/redis/data:/var/lib/redis
+        - ./docker/data/redis/config/redis.conf:/usr/local/etc/redis/redis.conf
+        environment:
+        - REDIS_REPLICATION_MODE=master
+        networks:
+            - app  
+volumes:
+    db:
+networks:
+    app:
