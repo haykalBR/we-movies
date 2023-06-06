@@ -37,3 +37,5 @@ A We Movie for DDD applications using Symfony as framework and running with PHP 
 
 ### Add in .env TOKEN_TMDB=TON KEY
 
+##  Open http://localhost in your favorite web browser
+
